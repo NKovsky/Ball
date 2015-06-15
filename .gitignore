@@ -1,57 +1,32 @@
-# Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-
-# C extensions
-*.so
-
-# Distribution / packaging
-.Python
-env/
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# PyInstaller
-#  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
-*.manifest
-*.spec
-
-# Installer logs
-pip-log.txt
-pip-delete-this-directory.txt
-
-# Unit test / coverage reports
-htmlcov/
-.tox/
-.coverage
-.coverage.*
-.cache
-nosetests.xml
-coverage.xml
-*,cover
-
-# Translations
-*.mo
-*.pot
-
-# Django stuff:
-*.log
-
-# Sphinx documentation
-docs/_build/
-
-# PyBuilder
-target/
+import pygame
+from random import randint as rand
+from pygame.locals import *
+r, g, b = (255,255,255)
+rx, gx, bx = (0,0,0)
+pygame.init()
+clock = pygame.time.Clock()
+janela = pygame.display.set_mode((800, 600))
+limite_janela = janela.get_rect()
+movex, movey = 400, 300
+def desenha_bola(x ,y, cor): pygame.draw.circle(janela, cor, [int(x), int(y)], 50)
+while True:
+    for event in pygame.event.get():
+        if event.type == QUIT: quit()
+    apertado = pygame.key.get_pressed()
+    if apertado[K_RETURN]:
+        r, g, b = rand(0,255), rand(0,255), rand(0,255)
+        rx, gx, bx = rand(0,255), rand(0,255), rand(0,255)
+    if apertado[K_RIGHT]: movex += 1 *10
+    if apertado[K_LEFT]: movex -= 1 *10
+    if apertado[K_UP]: movey -= 1 *10
+    if apertado[K_DOWN]: movey += 1 *10
+    if apertado[K_SPACE]: movex, movey = 400, 300
+    if movex >= 750: movex = 749
+    if movex <= 50: movex = 51
+    if movey >= 550: movey = 549
+    if movey <= 50: movey = 51
+    x, y = movex, movey
+    janela.fill((rx, gx, bx))
+    desenha_bola(x, y, (r, g, b))
+    pygame.display.flip()
+    clock.tick(60)
